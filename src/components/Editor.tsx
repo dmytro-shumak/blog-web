@@ -6,9 +6,14 @@ const JoditEditor = dynamic(() => import('jodit-react'), {ssr: false})
 import dynamic from "next/dynamic";
 import { useMemo, useRef, useState } from "react";
 
-export default function Editor({ onChange }: { onChange: (value: string) => void }) {
+interface Props {
+  onChange: (value: string) => void;
+  defaultContent?: string;
+}
+
+export default function Editor({ onChange, defaultContent = '' } :Props) {
 	const editor = useRef(null);
-	const [content, setContent] = useState('test');
+	const [content, setContent] = useState(defaultContent);
 
 	const config = useMemo(() => ({
 			readonly: false, // all options from https://xdsoft.net/jodit/docs/,

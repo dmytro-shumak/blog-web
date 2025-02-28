@@ -1,30 +1,42 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import Editor from "@/components/Editor";
+import { PostDto, editPost } from "@/lib/api";
+import { Post } from "@/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { createPost, PostDto } from "@/lib/api";
-import Editor from "@/components/Editor";
+import { useForm } from "react-hook-form";
 
-export default function CreatePostPage() {
-  const { register, handleSubmit } = useForm<PostDto>();
+interface Props {
+  post?: Post;
+  onSubmit: (data: PostDto) => Promise<void>;
+  redirectUrl?: string;
+  mode: 'create' | 'edit';
+}
+
+export default function PostForm({ post, onSubmit, redirectUrl = '/', mode = 'create' }: Props) {
+  const { register, handleSubmit } = useForm<PostDto>({
+    defaultValues: {
+      title: post?.title,
+      description: post?.description,
+      image: post?.image,
+    },
+  });
+  
   const [content, setContent] = useState("");
   const router = useRouter();
 
-  async function onSubmit(data: PostDto) {
-    try {
-      await createPost({ ...data, content });
-      router.push("/");
-    } catch (error) {
-      console.error("Error creating post", error);
-    }
+
+  async function submit(data: PostDto) {
+    await onSubmit({...data, content});
+    router.push(redirectUrl);
   }
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h1 className="text-2xl font-bold mb-4">Create New Post</h1>
+      <h1 className="text-2xl font-bold mb-4">{mode === 'create' ? 'Create' : 'Edit'} New Post</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(submit)} className="space-y-4">
         <input
           {...register("title", { required: true })}
           placeholder="Title"
@@ -43,13 +55,13 @@ export default function CreatePostPage() {
           className="w-full p-2 border border-gray-300 rounded"
         />
 
-        <Editor onChange={setContent} />
+        <Editor onChange={setContent} defaultContent={post?.content} />
 
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
         >
-          Create Post
+          {mode === 'create' ? 'Create' : 'Update'} Post
         </button>
       </form>
     </div>

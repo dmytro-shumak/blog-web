@@ -1,4 +1,4 @@
-
+import PostPageHeader from "./PostPageHeader";
 import { Post } from "@/types";
 import Image from "next/image";
 
@@ -12,8 +12,14 @@ export default async function PostPage({ params }: { params: { id: string } }) {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-      <Image src={post.image} alt={post.title} width={800} height={400} className="w-full h-80 object-cover" />
+      <PostPageHeader post={post}/>
+      <Image
+        src={post.image}
+        alt={post.title}
+        width={800}
+        height={400}
+        className="w-full h-80 object-cover"
+      />
       <div className="prose max-w-2xl mt-6" dangerouslySetInnerHTML={{ __html: post.content }} />
     </div>
   );
