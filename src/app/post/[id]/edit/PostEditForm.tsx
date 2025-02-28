@@ -17,16 +17,15 @@ const PostEditForm: React.FC<Props> = ({ post }) => {
       await editPost(post._id, data);
       router.push(`/post/${post._id}`);
     } catch (error) {
-      console.error("Error updating post", error);
+      if (error instanceof Error) {
+        alert(`Error updating post ${error.message}`);
+      } else {
+        alert(`Error updating post`);
+      }
     }
   }
 
-  return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h1 className="text-2xl font-bold mb-4">Edit Post</h1>
-      <PostForm onSubmit={onSubmit} post={post} mode="edit" />
-    </div>
-  );
+  return <PostForm onSubmit={onSubmit} post={post} mode="edit" />;
 };
 
 export default PostEditForm;

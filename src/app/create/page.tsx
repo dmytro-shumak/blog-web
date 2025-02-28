@@ -12,7 +12,11 @@ export default function CreatePostPage() {
       await createPost(data);
       router.push("/");
     } catch (error) {
-      console.error("Error creating post", error);
+      if (error instanceof Error) {
+        alert(`Error creating post ${error.message}`);
+      } else {
+        alert(`Error creating post`);
+      }
     }
   }
 
