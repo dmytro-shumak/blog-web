@@ -16,11 +16,5 @@ export default function CreatePostPage() {
     }
   }
 
-  return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h1 className="text-2xl font-bold mb-4">Create New Post</h1>
-
-      <PostForm mode="create" onSubmit={onSubmit}/>
-    </div>
-  );
+  return <PostForm mode="create" onSubmit={onSubmit} />;
 }

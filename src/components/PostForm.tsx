@@ -28,7 +28,7 @@ export default function PostForm({ post, onSubmit, mode = 'create' }: Props) {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="max-w-2xl mx-auto p-2 bg-white shadow-md rounded-lg sm:p-6">
       <h1 className="text-2xl font-bold mb-4">{mode === 'create' ? 'Create' : 'Edit'} New Post</h1>
 
       <form onSubmit={handleSubmit(submit)} className="space-y-4">

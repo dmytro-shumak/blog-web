@@ -16,7 +16,7 @@ export default function PostPageHeader({ post }: Props) {
   };
 
   return (
-    <div className="my-6 flex space-x-4">
+    <div className="my-6 flex space-x-4 items-center">
       <h1 className="text-4xl font-bold">{post.title}</h1>
 
       <button
