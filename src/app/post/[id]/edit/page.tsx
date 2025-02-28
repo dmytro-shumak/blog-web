@@ -7,8 +7,11 @@ const getPost = async (id: string): Promise<Post> => {
   return res.json();
 };
 
-export default async function UpdatePostPage({ params }: { params: { id: string } }) {
-  const post = await getPost(params.id);
+type Params = Promise<{ id: string }>;
+
+export default async function UpdatePostPage(props: { params: Params }) {
+  const { id } = await props.params;
+  const post = await getPost(id);
 
   return <PostEditForm post={post} />;
 }

@@ -8,13 +8,15 @@ const getPost = async (id: string): Promise<Post> => {
   return res.json();
 };
 
-export default async function PostPage({ params }: { params: { id: string } }) {
-  const { id } = await params;
+type Params = Promise<{ id: string }>;
+
+export default async function PostPage(props: { params: Params }) {
+  const { id } = await props.params;
   const post = await getPost(id);
 
   return (
     <div className="container mx-auto p-4">
-      <PostPageHeader post={post}/>
+      <PostPageHeader post={post} />
       <Image
         src={post.image}
         alt={post.title}

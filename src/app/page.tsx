@@ -12,7 +12,13 @@ const getPosts = async (page: number = 1): Promise<{ posts: Post[]; total: numbe
   return res.json();
 };
 
-export default async function Home({ searchParams }: { searchParams: { page?: string } }) {
+type SearchParams = Promise<{ page?: string }>
+
+
+export default async function Home(props: {
+  searchParams: SearchParams
+}) {
+  const searchParams = await props.searchParams
   const currentPage = Number(searchParams.page) || 1;
   const { posts, total } = await getPosts(currentPage);
   const totalPages = Math.ceil(total / POSTS_PER_PAGE);
