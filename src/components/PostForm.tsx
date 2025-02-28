@@ -1,20 +1,18 @@
 "use client";
 
 import Editor from "@/components/Editor";
-import { PostDto, editPost } from "@/lib/api";
+import { PostDto } from "@/lib/api";
 import { Post } from "@/types";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface Props {
   post?: Post;
   onSubmit: (data: PostDto) => Promise<void>;
-  redirectUrl?: string;
   mode: 'create' | 'edit';
 }
 
-export default function PostForm({ post, onSubmit, redirectUrl = '/', mode = 'create' }: Props) {
+export default function PostForm({ post, onSubmit, mode = 'create' }: Props) {
   const { register, handleSubmit } = useForm<PostDto>({
     defaultValues: {
       title: post?.title,
@@ -24,12 +22,9 @@ export default function PostForm({ post, onSubmit, redirectUrl = '/', mode = 'cr
   });
   
   const [content, setContent] = useState("");
-  const router = useRouter();
-
 
   async function submit(data: PostDto) {
-    await onSubmit({...data, content});
-    router.push(redirectUrl);
+    onSubmit({...data, content});
   }
 
   return (
