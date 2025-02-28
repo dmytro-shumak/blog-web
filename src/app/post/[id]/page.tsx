@@ -1,9 +1,10 @@
+import { appConfig } from "@/lib/config";
 import PostPageHeader from "./PostPageHeader";
 import { Post } from "@/types";
 import Image from "next/image";
 
 const getPost = async (id: string): Promise<Post> => {
-  const res = await fetch(`http://localhost:3001/posts/${id}`, { cache: "no-store" });
+  const res = await fetch(`${appConfig.apiUrl}/posts/${id}`, { cache: "no-store" });
   return res.json();
 };
 

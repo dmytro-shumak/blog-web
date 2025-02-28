@@ -1,5 +1,6 @@
 "use client";
 
+import { appConfig } from "@/lib/config";
 import { Post } from "@/types";
 import { useRouter } from "next/navigation";
 
@@ -11,7 +12,7 @@ export default function PostPageHeader({ post }: Props) {
   const router = useRouter();
 
   const handleDelete = async () => {
-    await fetch(`http://localhost:3001/posts/${post._id}`, { method: "DELETE" });
+    await fetch(`${appConfig.apiUrl}/posts/${post._id}`, { method: "DELETE" });
     router.push("/");
   };
 

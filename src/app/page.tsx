@@ -1,11 +1,12 @@
 import { Post } from "@/types";
 import PostCard from "@/components/PostCard";
 import Link from "next/link";
+import { appConfig } from "@/lib/config";
 
 const POSTS_PER_PAGE = 6;
 
 const getPosts = async (page: number = 1): Promise<{ posts: Post[]; total: number }> => {
-  const res = await fetch(`http://localhost:3001/posts?page=${page}&limit=${POSTS_PER_PAGE}`, {
+  const res = await fetch(`${appConfig.apiUrl}/posts?page=${page}&limit=${POSTS_PER_PAGE}`, {
     cache: "no-store",
   });
   return res.json();

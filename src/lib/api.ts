@@ -1,3 +1,5 @@
+import { appConfig } from "@/lib/config";
+
 export interface PostDto {
   title: string;
   description: string;
@@ -6,7 +8,7 @@ export interface PostDto {
 }
 
 export async function createPost(postData: PostDto) {
-  const response = await fetch("http://localhost:3001/posts", {
+  const response = await fetch(`${appConfig.apiUrl}/posts`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(postData),
@@ -21,7 +23,7 @@ export async function createPost(postData: PostDto) {
 
 
 export async function editPost(id:string, postData: PostDto) {
-  const response = await fetch(`http://localhost:3001/posts/${id}`, {
+  const response = await fetch(`${appConfig.apiUrl}/posts/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(postData),
